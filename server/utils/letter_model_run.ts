@@ -28,7 +28,7 @@ async function loadModel(): Promise<any> {
   const tf = await getTf()
   if (!model) {
     const modelPath = 'file://' + join(process.cwd(), 'server/models/letter_model/tfjs_model/model.json')
-    model = await tf.loadLayersModel(modelPath)
+    model = await tf.loadGraphModel(modelPath)
     console.log('[letter_model] Model loaded')
   }
   return model

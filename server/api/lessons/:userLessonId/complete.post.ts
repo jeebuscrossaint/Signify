@@ -28,7 +28,14 @@ export default defineEventHandler(async (event) => {
   }
 
   if (userLesson.status === 'completed') {
-    throw createError({ statusCode: 409, statusMessage: 'Lesson already completed' })
+    //throw createError({ statusCode: 409, statusMessage: 'Lesson already completed' })
+    // Continue if already completed, but notify user
+    if (userLesson.status === 'completed') {
+        setResponseHeader(event, 'x-notification', JSON.stringify({
+            type: 'warning',
+            message: 'Practicing again'
+        }))
+    }
   }
 
   // Count how many signs are in this lesson so we can calculate XP
