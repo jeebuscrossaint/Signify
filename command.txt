@@ -1,0 +1,6 @@
+# Dry
+python seed_signs.py --videos-dir ./dataset/videos --csv ./words.csv --dry-run
+# Small
+python seed_signs.py --videos-dir ./dataset/videos --csv ./words.csv --limit 10
+# Full
+python seed_signs.py --videos-dir ./dataset/videos --csv ./words.csv
