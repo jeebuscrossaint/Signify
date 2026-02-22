@@ -1,0 +1,10 @@
+[project]
+name = "gtech-hackathon"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "dtaidistance>=2.4.0",
+    "zscore>=0.1",
+]
