@@ -1,0 +1,35 @@
+theres 35 possible joints from hip to neck
+we get the joints from pre recorded tutor videos we already have that data
+we pass in the user submission data basically
+x(t) & y(t) so each joint has change in time respect to the dimensions x and y
+
+say joint 4 of a user submitted video
+x(t): moving in an interesting graph/function yk
+similar to
+y(t) it got the same thing goin like another funky graph n stuff yk of the movement of that joint
+
+we see these streams of data
+every new position change
+btw we already have joint 4 of the tutor duh cuz the model is trained on this shi and like it know and whatnot
+so we have that info at our disposal
+
+these graphs are calculated while the user records themselves live on the website
+
+so basically the uh data for the hand objects as like what its separated into is hand_x hand_y label (which is like a phrase/word in asl as well as a letter)
+so like whenever you get to zero you know you at another video so like new video = 0 
+
+for every moment you in the timestamp you get fed a new x and y position and you basically have a column for every single position
+
+this continues on hand_1_x hand 1 y yk ppl got 2 hands bruh
+
+all the joints start at zero to joint 34
+
+each of these is gonna form a curve like we said earlier
+
+you can see how this gonna be a ton of calculations per second
+
+filter dataframe for rows per new word so entire table doesnt load in all the time cuz that super inefficient
+
+alright so yea u laod that in so if we remember our steps
+
+

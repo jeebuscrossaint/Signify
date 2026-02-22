@@ -3,8 +3,11 @@ name = "gtech-hackathon"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 dependencies = [
     "dtaidistance>=2.4.0",
-    "zscore>=0.1",
+    "numpy>=2.0.0",
+    "joblib>=1.4.0",
+    "mediapipe>=0.10.0",
+    "opencv-python>=4.9.0",
 ]
