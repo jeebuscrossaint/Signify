@@ -10,8 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@nuxtjs/supabase": "^2.0.4",
     "@tailwindcss/vite": "^4.2.0",
+    "@tensorflow/tfjs-node": "^4.22.0",
     "nuxt": "^4.3.1",
     "supabase": "^2.76.12",
     "tailwindcss": "^4.2.0",

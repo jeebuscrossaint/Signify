@@ -11,6 +11,17 @@ export default defineNuxtConfig({
     ],
   },
 
+  // Enable WebSocket support for real-time model inference routes.
+  // Also mark TensorFlow.js Node as external — it uses native bindings that cannot be bundled.
+  nitro: {
+    experimental: {
+      websocket: true,
+    },
+    externals: {
+      external: ['@tensorflow/tfjs-node'],
+    },
+  },
+
   modules: ['@nuxtjs/supabase'],
 
   supabase: {

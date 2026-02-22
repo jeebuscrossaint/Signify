@@ -1,0 +1,35 @@
+Generate a new ASL lesson for the following user.
+
+USER CONTEXT:
+- Learning Stage: {{learning_stage}}
+- XP Level: {{user_level}}
+- Signs already introduced (do NOT re-teach these): {{introduced_slugs}}
+- Signs currently being learned: {{learning_slugs}}
+- Is this the user's very first lesson ever: {{is_first_lesson}}
+
+AVAILABLE SIGNS TO CHOOSE FROM:
+{{available_signs_json}}
+
+INSTRUCTIONS:
+- Choose {{n}} signs from the available list that best suit this user's stage and level.
+- For stage "letters": pick the next letters in alphabetical order that have not been introduced yet. If this is the first lesson, start with A, B, C. Never include Z.
+- For stage "words": pick 3-5 signs that share a clear thematic connection (e.g., family, emotions, food, greetings).
+- For stage "sentences": pick signs that can be combined into a simple, natural ASL sentence.
+- The intro_text must be 2-3 sentences. If stage is "letters" and is_first_lesson is true, briefly explain what fingerspelling is and why it matters in Deaf culture.
+- lesson_type must be one of: "alphabet_intro" (first lesson only), "standard", "thematic".
+- theme is null for standard lessons, or a single word like "family" for thematic.
+
+RETURN THIS EXACT JSON STRUCTURE:
+{
+  "title": "engaging lesson title string",
+  "intro_text": "2-3 sentence narrative intro string",
+  "lesson_type": "standard | alphabet_intro | thematic",
+  "theme": null,
+  "signs_to_teach": [
+    {
+      "slug": "exact-slug-from-available-list",
+      "display_text": "same display_text from available list",
+      "reason_chosen": "brief internal rationale not shown to user"
+    }
+  ]
+}

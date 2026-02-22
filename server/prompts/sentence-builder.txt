@@ -1,0 +1,17 @@
+Create a short, natural ASL sentence using ONLY the signs the user has mastered.
+
+MASTERED SIGNS (use only slugs from this list):
+{{mastered_signs_json}}
+
+RULES:
+- The sentence must be 3-6 signs long.
+- Use ONLY slugs from the mastered signs list above — no exceptions.
+- ASL has its own grammar. It often omits articles, auxiliary verbs, and copulas. Keep the structure natural for ASL, not a word-for-word English translation.
+- grammar_note should briefly explain the ASL syntax choice made (e.g., "Topic-comment structure" or "No copula needed in ASL").
+
+RETURN THIS EXACT JSON STRUCTURE:
+{
+  "sentence": "English translation of the sentence",
+  "sign_slugs_in_order": ["slug1", "slug2", "slug3"],
+  "grammar_note": "brief explanation of ASL syntax used"
+}

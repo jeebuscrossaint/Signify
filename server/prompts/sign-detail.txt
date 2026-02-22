@@ -1,0 +1,18 @@
+Provide educational content for the following ASL sign.
+
+SIGN DETAILS:
+- Display Text: {{display_text}}
+- Sign Type: {{sign_type}}
+- Category: {{category}}
+
+REQUIREMENTS:
+- ai_description: Step-by-step instructions on handshape, palm orientation, finger placement, and any movement. Be precise enough that a beginner can attempt the sign without video. 2-4 sentences max. Never use "Z" as an example.
+- ai_mnemonic: A vivid visual or tactile memory hook. Relate the physical shape of the hand to something familiar — an object, letter shape, or action. 1-2 sentences max.
+- ai_fun_fact: One genuinely interesting, culturally respectful fact about this sign, its usage, or ASL more broadly. Keep it brief and engaging. 1-2 sentences max.
+
+RETURN THIS EXACT JSON STRUCTURE:
+{
+  "ai_description": "step-by-step hand formation description",
+  "ai_mnemonic": "vivid memory hook",
+  "ai_fun_fact": "interesting cultural or linguistic fact"
+}

@@ -1,0 +1,13 @@
+Decode the following sequence of fingerspelled ASL letter tokens into the most likely English word.
+
+TOKENS:
+{{tokens}}
+
+RULES:
+- The predicted word must be lowercase.
+- No punctuation or extra words in the word field.
+- If multiple words are equally plausible, choose the most common everyday English word.
+- If the tokens clearly spell out an abbreviation or name, output it as-is in lowercase.
+
+RETURN THIS EXACT JSON STRUCTURE:
+{"word": "predicted_word"}
