@@ -10,4 +10,6 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+
+  modules: ['@nuxtjs/supabase'],
 })
