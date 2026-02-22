@@ -20,7 +20,9 @@ export default defineEventHandler(async (event) => {
     .single()
 
   if (updateError) {
+    console.log(updateError)
     throw createError({ statusCode: 500, statusMessage: 'Failed to complete onboarding' })
+    
   }
 
   // Create streaks row if it doesn't exist yet

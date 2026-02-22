@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+/* Smooth page transitions and consistent box model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Prevent layout shift from scrollbar appearing/disappearing */
+html {
+  overflow-y: scroll;
+}
+
+/* Consistent focus ring using the app's primary violet color */
+:focus-visible {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
