@@ -1,7 +1,9 @@
 import { requireUser } from '~~/server/utils/auth'
 import { useSupabaseAdmin } from '~~/server/utils/supabase'
 
-// Returns the full state of a practice session including all its problems
+// Returns the full state of a practice session including all its problems.
+// Signed video URLs are generated inline here (same approach as the lesson endpoint)
+// so the client never needs a separate round-trip to fetch them.
 export default defineEventHandler(async (event) => {
   const user = await requireUser(event)
   const supabase = useSupabaseAdmin()
@@ -17,7 +19,7 @@ export default defineEventHandler(async (event) => {
       *,
       practice_problems (
         *,
-        signs ( id, slug, display_text, sign_type, ai_mnemonic )
+        signs ( id, slug, display_text, sign_type, ai_mnemonic, video_path )
       )
     `)
     .eq('id', sessionId)
@@ -28,5 +30,20 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 404, statusMessage: 'Session not found' })
   }
 
-  return { session }
+  // Generate signed video URLs for each problem whose sign has a video_path
+  const problemsWithUrls = await Promise.all(
+    (session.practice_problems as any[]).map(async (problem: any) => {
+      const sign = problem.signs
+      let videoUrl: string | null = null
+      if (sign?.video_path) {
+        const { data: urlData } = await supabase.storage
+          .from('sign-videos')
+          .createSignedUrl(sign.video_path, 3600)
+        videoUrl = urlData?.signedUrl ?? null
+      }
+      return { ...problem, signs: { ...sign, videoUrl } }
+    })
+  )
+
+  return { session: { ...session, practice_problems: problemsWithUrls } }
 })

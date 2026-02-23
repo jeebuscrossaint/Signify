@@ -55,13 +55,13 @@ const handleSignIn = async () => {
 // After successful sign in, check onboarding status and redirect
 const redirectAfterAuth = async (isNewUser: boolean) => {
   if (isNewUser) {
-    return navigateTo('/onboarding')
+    return navigateTo('/dashboard')
   }
   // Fetch onboarding flag from the profile
   try {
     const data = await $fetch<{ profile: { onboarding_complete: boolean } }>('/api/user/profile')
     if (!data.profile.onboarding_complete) {
-      return navigateTo('/onboarding')
+      return navigateTo('/dashboard')
     }
   } catch {
     // If profile fetch fails just go to dashboard

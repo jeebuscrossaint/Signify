@@ -10,6 +10,7 @@ interface ProblemSign {
   display_text: string
   sign_type: string | null
   ai_mnemonic: string | null
+  videoUrl: string | null
 }
 
 interface Problem {
@@ -50,32 +51,32 @@ const problems = computed<Problem[]>(() => {
   return [...raw]
 })
 
-// Signed video URLs keyed by problem ID (fetched for watch_and_type problems)
+// Video URLs are now embedded in each problem's signs.videoUrl by the session endpoint.
+// We keep videoUrls as a client-side ref so the template can reactively show/hide the video
+// without requiring any extra fetch.
 const videoUrls = ref<Record<string, string | null>>({})
 
-// Fetch video URL for a specific problem using the sign's slug
-const fetchVideoUrl = async (problem: Problem) => {
-  if (problem.problem_type !== 'watch_and_type') return
-  if (videoUrls.value[problem.id] !== undefined) return
-  if (!problem.signs?.slug) return
-  try {
-    const result = await $fetch<{ videoUrl: string | null }>(`/api/signs/${problem.signs.slug}/video-url`)
-    videoUrls.value[problem.id] = result.videoUrl
-  } catch {
-    videoUrls.value[problem.id] = null
+// Populate videoUrls from the already-fetched session data (no extra HTTP request needed)
+const populateVideoUrls = () => {
+  for (const p of problems.value) {
+    if (p.problem_type === 'watch_and_type') {
+      videoUrls.value[p.id] = p.signs?.videoUrl ?? null
+    }
   }
 }
+
+// Legacy stub kept so any existing callers don't break — now a no-op
+// (URLs already present from session response)
+const fetchVideoUrl = async (_problem: Problem) => {}
 
 // Current problem index (0-based)
 const currentIndex = ref(0)
 const currentProblem = computed(() => problems.value[currentIndex.value] ?? null)
 
-// Prefetch the first problem's video URL
-onMounted(async () => {
-  if (currentProblem.value) await fetchVideoUrl(currentProblem.value)
-})
+// Pre-populate all video URLs from the session data immediately
+onMounted(() => { populateVideoUrls() })
 
-// Prefetch next problem's video URL when navigating
+// (Legacy watch kept to avoid breaking anything — populateVideoUrls already covers all)
 watch(currentIndex, async (idx) => {
   const p = problems.value[idx]
   if (p) await fetchVideoUrl(p)
@@ -338,8 +339,11 @@ const scorePercent = computed(() =>
             </div>
 
             <!-- Large letter fallback when no video -->
-            <div v-else class="h-36 bg-linear-to-br from-violet-50 to-indigo-50 flex items-center justify-center">
-              <span class="text-8xl font-black text-violet-200 select-none">?</span>
+            <div v-else class="h-36 bg-linear-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-center gap-2 px-4">
+              <svg class="w-8 h-8 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9A2.25 2.25 0 0013.5 5.25h-9A2.25 2.25 0 002.25 7.5v9A2.25 2.25 0 004.5 18.75z" />
+              </svg>
+              <p class="text-sm text-gray-400 text-center">Video unavailable.<br>Type the letter you think is being signed.</p>
             </div>
 
             <!-- Text input -->
